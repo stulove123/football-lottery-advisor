@@ -66,11 +66,11 @@ Shared requirements:
 - State whether the pick is `主推`, `次选`, `谨慎`, or `暂不推荐`.
 - Default to detailed output. Do not collapse a single-match recommendation into a few short paragraphs unless the user explicitly asks for `简短`, `只要结论`, or `精简`.
 - For a single match, include at least 10 distinct evidence points across team state, recent form, injury/lineup, tactical matchup, Chinese lottery odds, motivation/schedule, environment, and risk. If data is unavailable, state the gap and how it affects confidence.
-- Default `小红书版` is a fixed Qianwen-style 6-section format: `预测结论`, `比赛定性`, `预测理由`, `进球预测`, `场外因素`, `总结`. Do not remove, rename, merge, or reorder its sections unless the user explicitly requests another style or a shorter answer. The `预测结论` section must keep the compact decision table and must include at least 3 recommendation rows ordered as `保守`, `均衡`, `进取`; risk and potential odds return must increase by row. Each major section body must contain at least 100 Chinese characters; the heading and table header do not count.
+- Default `小红书版` is a fixed Qianwen-style 6-section format: `预测结论`, `比赛定性`, `预测理由`, `进球预测`, `场外因素`, `总结`. Do not remove, rename, merge, or reorder its sections unless the user explicitly requests another style or a shorter answer. The `预测结论` section must keep the compact decision table and must include at least 3 recommendation rows ordered by a separate `风险档位` column as `稳健档`, `平衡档`, and `博高赔`; risk and potential odds return must increase by row. The `推荐` column must contain only the China-lottery pick direction, not the risk tier. Each major section body must contain at least 100 Chinese characters; the heading and table header do not count.
 - Use `A/B/C + 星级` for confidence, such as `B｜★★★★☆`. Stars express subjective confidence only and are not a hit-rate promise.
 - Use Chinese fan-standard translations for player, coach, and common team nickname references. Prefer Chinese sports media conventions such as `维尼修斯`, `拉菲尼亚`, `麦克托米奈`, `阿什拉夫`, `齐耶赫`, `恩内斯里`, `内马尔`, `罗伯逊`, `麦金`, `尚克兰`. Do not output raw English player names in Chinese-style notes.
 - If a name is obscure and no common Chinese translation is immediately reliable, create a clear Chinese transliteration and keep the original English name out of the public-facing text.
-- Avoid promotional or certainty language such as `必中`, `包红`, `回血`, `重仓`, `稳胆`, `上车`, `闭眼买`, or `错过可惜`.
+- Avoid promotional or certainty language such as `必中`, `包红`, `回血`, `重仓`, `稳胆`, `上车`, `闭眼买`, `错过可惜`, `稳稳收米`, or `赌一把`.
 - Use emojis as required visual anchors, not as proof. Unless the user explicitly asks for `不要表情`, `无表情`, or `纯文本`, every major section heading must start with an emoji.
 - Minimum emoji anchors by style: at least 8 in `专业分析师版`, at least 10 in `公众号版`, and exactly the fixed 6 major emoji headings in default `小红书版`, with numbered emoji subpoints under both `预测理由` and `场外因素`. Do not strip emoji headings even for serious analysis.
 - Recommended emoji vocabulary: `🎯` conclusion, `📌` pick, `📊` odds/probability, `🧠` analysis, `⚔️` tactical matchup, `🚑` injuries, `🌦️` weather, `⚠️` risk, `✅` final card, `📝` source note.
@@ -83,13 +83,13 @@ Use this skeleton as the content backbone for strong-opinion outputs. The defaul
 
 ```text
 🎯 预测结论
-| 比赛 | 竞彩玩法 | 推荐 | 信心 | 估计概率 | 公允赔率 | 当前赔率 | 核心理由 |
-| --- | --- | --- | --- | ---: | ---: | ---: | --- |
-| [主队] vs [客队] | [低风险中国足彩玩法] | 保守：[方向] | [A/B/C｜星级] | [x%] | [x.xx] | [x.xx] | [一句话概括最关键的推荐理由] |
-| [主队] vs [客队] | [中风险中国足彩玩法] | 均衡：[方向] | [A/B/C｜星级] | [x%] | [x.xx] | [x.xx] | [一句话概括最关键的推荐理由] |
-| [主队] vs [客队] | [高风险中国足彩玩法] | 进取：[方向] | [A/B/C｜星级] | [x%] | [x.xx] | [x.xx] | [一句话概括最关键的推荐理由] |
+| 风险档位 | 比赛 | 竞彩玩法 | 推荐 | 信心 | 估计概率 | 公允赔率 | 当前赔率 | 核心理由 |
+| --- | --- | --- | --- | --- | ---: | ---: | ---: | --- |
+| 稳健档 | [主队] vs [客队] | [低风险中国足彩玩法] | [方向] | [A/B/C｜星级] | [x%] | [x.xx] | [x.xx] | [一句话概括最关键的推荐理由] |
+| 平衡档 | [主队] vs [客队] | [中风险中国足彩玩法] | [方向] | [A/B/C｜星级] | [x%] | [x.xx] | [x.xx] | [一句话概括最关键的推荐理由] |
+| 博高赔 | [主队] vs [客队] | [高风险中国足彩玩法] | [方向] | [A/B/C｜星级] | [x%] | [x.xx] | [x.xx] | [一句话概括最关键的推荐理由] |
 
-[表格后写强观点结论：说明三档推荐为什么按保守、均衡、进取排序，风险和潜在赔率回报如何递增；再写主推/次选/谨慎/暂不推荐、比分参考、总进球数参考、为什么不是简单追热门或搏冷。不要把潜在回报写成收益承诺。]
+[表格后写强观点结论：说明三档推荐为什么按稳健档、平衡档、博高赔排序，风险和潜在赔率回报如何递增；再写主推/次选/谨慎/暂不推荐、比分参考、总进球数参考、为什么不是简单追热门或搏冷。不要把潜在回报写成收益承诺。]
 
 ⚖️ 比赛定性
 [用千问式强定性写法定义比赛：强弱分明、热门过热、让球陷阱、拉锯防冷、进球数低开高走等。必须交代赛事背景、时间地点、市场关注点、双方定位和最容易被误判的点。]
@@ -129,8 +129,8 @@ Depth requirements for one match:
 
 Start with a compact decision table:
 
-| 比赛 | 竞彩玩法 | 推荐 | 信心 | 估计概率 | 公允赔率 | 当前赔率 | 核心理由 |
-| --- | --- | --- | --- | ---: | ---: | ---: | --- |
+| 风险档位 | 比赛 | 竞彩玩法 | 推荐 | 信心 | 估计概率 | 公允赔率 | 当前赔率 | 核心理由 |
+| --- | --- | --- | --- | --- | ---: | ---: | ---: | --- |
 
 Follow with this structure:
 
@@ -274,18 +274,18 @@ Best for social notes. Use the fixed Qianwen-style emoji template below by defau
 Depth requirements for one match:
 
 - Use exactly these 6 major sections in this order unless the user explicitly asks for another style or a shorter answer: `🎯 预测结论`, `⚖️ 比赛定性`, `🧠 预测理由`, `⚽ 进球预测`, `🌦️ 场外因素`, `✅ 总结`.
-- The `🎯 预测结论` section must start with the compact decision table. Keep the table columns exactly as shown below, and include at least 3 rows: `保守`, `均衡`, and `进取`, ordered from lower risk/lower potential odds return to higher risk/higher potential odds return. Put the risk tier inside the `推荐` cell, such as `保守：让平`, `均衡：负`, `进取：比分 1-2/0-2`. Do not include `价值判断` or `主要风险` as table columns; explain value and risk in the paragraph after the table plus the later `竞彩赔率与概率` and `总结` content.
+- The `🎯 预测结论` section must start with the compact decision table. Keep the table columns exactly as shown below, and include at least 3 rows in the separate `风险档位` column: `稳健档`, `平衡档`, and `博高赔`, ordered from lower risk/lower potential odds return to higher risk/higher potential odds return. Keep the `推荐` cell clean with only the China-lottery pick direction, such as `让平`, `负`, or `比分 1-2/0-2`; do not repeat the risk tier inside `推荐`. Do not include `价值判断` or `主要风险` as table columns; explain value and risk in the paragraph after the table plus the later `竞彩赔率与概率` and `总结` content.
 - Each major section body must contain at least 100 Chinese characters. The table header, table separators, and section heading do not count toward the 100-character body requirement.
 - Target roughly 1,800-2,800 Chinese characters for a normal single-match note. If a source is unavailable, write what is missing, why it matters, and whether confidence should be downgraded.
 - `🧠 预测理由` must be split into numbered emoji subpoints; do not compress it into one paragraph. `🌦️ 场外因素` must also be split into exactly 5 numbered emoji subpoints, matching the style of `预测理由`; do not output it as one combined paragraph, and do not invent weather, referee, or travel facts without a source.
 
 ```text
 🎯 预测结论
-| 比赛 | 竞彩玩法 | 推荐 | 信心 | 估计概率 | 公允赔率 | 当前赔率 | 核心理由 |
-| --- | --- | --- | --- | ---: | ---: | ---: | --- |
-| [主队] vs [客队] | [低风险中国足彩玩法，如让球胜平负/胜平负/总进球数稳健区间] | 保守：[方向] | [A/B/C｜星级] | [x%] | [x.xx] | [x.xx] | [一句话概括最关键的推荐理由] |
-| [主队] vs [客队] | [中风险中国足彩玩法，如胜平负/总进球数/半全场稳健组合] | 均衡：[方向] | [A/B/C｜星级] | [x%] | [x.xx] | [x.xx] | [一句话概括最关键的推荐理由] |
-| [主队] vs [客队] | [高风险中国足彩玩法，如比分/半全场/更窄总进球数] | 进取：[方向] | [A/B/C｜星级] | [x%] | [x.xx] | [x.xx] | [一句话概括最关键的推荐理由] |
+| 风险档位 | 比赛 | 竞彩玩法 | 推荐 | 信心 | 估计概率 | 公允赔率 | 当前赔率 | 核心理由 |
+| --- | --- | --- | --- | --- | ---: | ---: | ---: | --- |
+| 稳健档 | [主队] vs [客队] | [低风险中国足彩玩法，如让球胜平负/胜平负/总进球数稳健区间] | [方向] | [A/B/C｜星级] | [x%] | [x.xx] | [x.xx] | [一句话概括最关键的推荐理由] |
+| 平衡档 | [主队] vs [客队] | [中风险中国足彩玩法，如胜平负/总进球数/半全场稳健组合] | [方向] | [A/B/C｜星级] | [x%] | [x.xx] | [x.xx] | [一句话概括最关键的推荐理由] |
+| 博高赔 | [主队] vs [客队] | [高风险中国足彩玩法，如比分/半全场/更窄总进球数] | [方向] | [A/B/C｜星级] | [x%] | [x.xx] | [x.xx] | [一句话概括最关键的推荐理由] |
 
 [至少100个中文字符。表格后必须再写一段强结论：先说明三档推荐的风险和潜在赔率回报为什么依次加大，再写本场主推什么、次选什么、比分参考和总进球数参考是什么。语气可以有观点，但不能写确定性推单词；要说明这不是简单追热门，也不是无依据搏冷，而是基于中国竞彩赔率、球队状态、阵容信息和反向风险后的赛前概率判断。]
 
