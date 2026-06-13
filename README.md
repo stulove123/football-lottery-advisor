@@ -1,20 +1,18 @@
 # football-lottery-advisor
 
-A Codex skill for source-backed Chinese football lottery analysis.
+面向 Codex 的中文足球彩票分析 skill，用于生成有来源、有概率、有反方风险的赛前分析。它专注中国体育彩票足球玩法，例如 `竞彩足球`、`胜平负`、`让球胜平负`、`比分`、`总进球数`、`半全场胜平负`、`混合过关`、`14场胜负`、`任选9`、`6场半全场` 和 `4场进球`。
 
-This skill helps produce pre-match recommendations for China Sports Lottery football markets such as `竞彩足球`, `胜平负`, `让球胜平负`, `比分`, `总进球数`, `半全场胜平负`, `混合过关`, `14场胜负`, and `任选9`.
+这个项目只提供赛前概率分析和决策辅助，不保证赛果，不承诺收益，也不鼓励高风险投注。
 
-It is designed for decision support only. It does not guarantee outcomes, profit, or betting success.
+## 核心能力
 
-## What It Does
+- 先核对比赛、时间、场地、伤停、预计首发、近期状态、赔率和天气，再给推荐。
+- 把分析严格映射到中国体育彩票支持的官方玩法和结算口径。
+- 计算隐含概率、去水概率、公允赔率、期望收益率和 Kelly 比例。
+- 输出中文推荐笔记，包含主推/次选/谨慎/暂不推荐、价值判断、反方观点和风险提示。
+- 避免把亚盘、大小球、角球、牌数、球员道具等非中国足彩玩法直接写成最终推荐。
 
-- Verifies current fixture, team news, odds, lineup, venue, and market context before giving a pick.
-- Maps recommendations to official China Sports Lottery market names and settlement assumptions.
-- Computes implied probabilities, no-vig probabilities, fair odds, expected ROI, and Kelly fractions from decimal odds.
-- Produces Chinese recommendation notes with probability, value, counterargument, and risk language.
-- Avoids unsupported betting markets unless translated into supported Chinese lottery play types.
-
-## Structure
+## 目录结构
 
 ```text
 .
@@ -28,15 +26,15 @@ It is designed for decision support only. It does not guarantee outcomes, profit
     └── value_calc.py
 ```
 
-## Usage
+## 安装与使用
 
-Install or copy this folder into your Codex skills directory, then invoke:
+把本目录复制或克隆到 Codex 的 skills 目录，然后在 Codex 中调用：
 
 ```text
 $football-lottery-advisor 分析 德国 vs 库拉索
 ```
 
-Run the value calculator directly:
+也可以直接运行赔率价值计算脚本：
 
 ```bash
 python3 scripts/value_calc.py \
@@ -46,12 +44,33 @@ python3 scripts/value_calc.py \
   --format markdown
 ```
 
-## Safety Notes
+示例输出会包含：
 
-- This project is analytical tooling, not financial advice.
-- All recommendations should be treated as uncertain pre-match probability judgments.
-- Current fixture, odds, injuries, lineups, and rules must be verified before use.
-- Do not use this skill to promote guaranteed wins, chasing losses, borrowing to bet, or high-risk staking.
+- 市场水位和去水概率
+- 你的模型概率
+- 公允赔率
+- 期望收益率
+- Kelly 和 1/4 Kelly 参考
+
+## 输出风格
+
+默认输出为中文“小红书版”六段式：
+
+1. 预测结论
+2. 比赛定性
+3. 预测理由
+4. 进球预测
+5. 场外因素
+6. 总结
+
+skill 也支持更完整的 `专业分析师版` 和更长篇的 `公众号版`，但都会保留概率、赔率、信息时间、反方风险和免责声明。
+
+## 免责声明
+
+- 本项目是分析工具，不是财务建议。
+- 所有推荐都应视为不确定的赛前概率判断。
+- 使用前必须复核最新赛程、赔率、伤停、首发、天气和官方规则。
+- 不应使用本项目宣传 `必中`、`稳赚`、`包红`、追损、借贷投注或高风险资金管理。
 
 ## License
 
