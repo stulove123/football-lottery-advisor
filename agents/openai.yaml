@@ -1,0 +1,4 @@
+interface:
+  display_name: "football-lottery-advisor"
+  short_description: "Source-backed soccer lottery recommendations"
+  default_prompt: "Use $football-lottery-advisor to analyze a football lottery match and produce source-backed recommendations."
