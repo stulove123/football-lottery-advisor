@@ -31,7 +31,7 @@
 把本目录复制或克隆到 Codex 的 skills 目录，然后在 Codex 中调用：
 
 ```text
-$football-lottery-advisor 分析 德国 vs 库拉索
+$football-lottery-advisor 分析 球队 1 vs 球队 2
 ```
 
 也可以直接运行赔率价值计算脚本：
